@@ -1,0 +1,8 @@
+
+${AnsiColor.BRIGHT_BLUE}  ███████╗██╗     ██╗   ██╗██╗  ██╗███████╗████████╗
+${AnsiColor.BRIGHT_BLUE}  ╚══███╔╝██║     ██║   ██║██║ ██╔╝██╔════╝╚══██╔══╝
+${AnsiColor.BRIGHT_BLUE}    ███╔╝ ██║     ██║   ██║█████╔╝ █████╗     ██║   
+${AnsiColor.BRIGHT_BLUE}   ███╔╝  ██║     ██║   ██║██╔═██╗ ██╔══╝     ██║   
+${AnsiColor.BRIGHT_BLUE}  ███████╗███████╗╚██████╔╝██║  ██╗███████╗   ██║   
+${AnsiColor.BRIGHT_BLUE}  ╚══════╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝   ╚═╝
+${AnsiColor.CYAN}                                            by Zluqe
