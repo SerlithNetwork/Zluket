@@ -44,8 +44,8 @@
     <main class="container">
         <div class="paste-header">
             <div class="paste-meta">
-                <span class="paste-id" th:text="'Paste ID: ' + ${paste.uuid}">Paste ID...</span>
-                <span class="paste-time" th:text="'Created: ' + ${paste.created}">Created...</span>
+                <span class="paste-id" th:text="'Paste ID: ' + ${id}">Paste ID...</span>
+                <span class="paste-time" th:text="'Created: ' + ${date}">Created...</span>
             </div>
             <div class="language-tag">
                 <span th:text="${language}">Language...</span>

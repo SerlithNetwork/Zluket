@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.servlet.view.RedirectView
+import java.time.format.DateTimeFormatter
 import java.util.UUID
 import kotlin.jvm.Throws
 import kotlin.jvm.optionals.getOrNull
@@ -31,7 +32,10 @@ constructor(
     @Throws(ResourceNotFoundException::class)
     fun getPaste(@PathVariable uuid: UUID, model: Model): String {
         val paste = this.pasteRepository.findById(uuid).getOrNull() ?: throw ResourceNotFoundException()
+        val id = paste.uuid.toString().split("-").last()
+        model.addAttribute("id", id)
         model.addAttribute("paste", paste)
+        model.addAttribute("date", paste.created.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
         model.addAttribute("language", "plaintext")
         return "view_paste"
     }
