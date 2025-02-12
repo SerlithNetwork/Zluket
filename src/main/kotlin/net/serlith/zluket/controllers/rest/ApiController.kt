@@ -23,7 +23,7 @@ constructor(
     private val pasteRepository: PasteRepository,
 ) {
 
-    @Value("\${zluket.api.content.max_length}")
+    @Value("\${zluket.api.content.max_length:100000}")
     private var contentMaxLength: Int = 0
 
     @PostMapping("/documents")

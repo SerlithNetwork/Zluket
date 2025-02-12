@@ -3,6 +3,7 @@ package net.serlith.zluket.controllers.rest
 import net.serlith.zluket.databases.PasteRepository
 import net.serlith.zluket.databases.types.PasteModel
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.ClassPathResource
 import org.springframework.core.io.InputStreamResource
 import org.springframework.data.rest.webmvc.ResourceNotFoundException
@@ -28,12 +29,16 @@ constructor(
     private val pasteRepository: PasteRepository,
 ) {
 
+    @Value("\${zluket.api.content.max_length:100000}")
+    private var contentMaxLength: Int = 0
+
     @PostMapping(
         consumes = [MediaType.APPLICATION_FORM_URLENCODED_VALUE],
     )
     fun postIndex(@RequestParam(name = "content") content: String): RedirectView {
         if (content.isBlank()) return RedirectView("/paste")
-        val paste = this.pasteRepository.save(PasteModel(content))
+        var contentVar = if (content.length > contentMaxLength) content.substring(0, contentMaxLength) else content
+        val paste = this.pasteRepository.save(PasteModel(contentVar))
         return RedirectView("/paste/${paste.uuid}")
     }
 
@@ -49,7 +54,8 @@ constructor(
     @Throws(ResourceNotFoundException::class)
     fun postEditPaste(@PathVariable uuid: UUID, @RequestBody form: Map<String, String>): RedirectView {
         val paste = this.pasteRepository.findById(uuid).getOrNull() ?: throw ResourceNotFoundException()
-        val content = form["content"] ?: return RedirectView("/paste")
+        var content = form["content"] ?: return RedirectView("/paste")
+        content = if (content.length > contentMaxLength) content.substring(0, contentMaxLength) else content
         val new = this.pasteRepository.save(PasteModel(content))
         return RedirectView("/paste/${new.uuid}")
     }

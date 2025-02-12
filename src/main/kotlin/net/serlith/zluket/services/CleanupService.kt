@@ -15,7 +15,7 @@ class CleanupService
     private val pasteRepository: PasteRepository,
 ) {
 
-    @Value("\${zluket.cleanup.weeks}")
+    @Value("\${zluket.cleanup.weeks:1}")
     private var cleanupWeeks: Long = 1L
 
     @Scheduled(fixedRate = 1, timeUnit = TimeUnit.HOURS)
