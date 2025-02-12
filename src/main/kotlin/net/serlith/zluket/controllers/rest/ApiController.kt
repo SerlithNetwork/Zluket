@@ -2,6 +2,7 @@ package net.serlith.zluket.controllers.rest
 
 import net.serlith.zluket.databases.PasteRepository
 import net.serlith.zluket.databases.types.PasteModel
+import net.serlith.zluket.utils.filterIps
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.ResponseEntity
@@ -37,7 +38,7 @@ constructor(
             truncated = true
         }
 
-        val paste = this.pasteRepository.save(PasteModel(contentVar))
+        val paste = this.pasteRepository.save(PasteModel(filterIps(contentVar)))
         return ResponseEntity.ok(mapOf(
             "uuid" to paste.uuid,
             "truncated" to truncated,

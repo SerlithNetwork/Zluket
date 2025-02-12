@@ -2,6 +2,7 @@ package net.serlith.zluket.controllers.rest
 
 import net.serlith.zluket.databases.PasteRepository
 import net.serlith.zluket.databases.types.PasteModel
+import net.serlith.zluket.utils.filterIps
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.ClassPathResource
@@ -38,7 +39,7 @@ constructor(
     fun postIndex(@RequestParam(name = "content") content: String): RedirectView {
         if (content.isBlank()) return RedirectView("/paste")
         var contentVar = if (content.length > contentMaxLength) content.substring(0, contentMaxLength) else content
-        val paste = this.pasteRepository.save(PasteModel(contentVar))
+        val paste = this.pasteRepository.save(PasteModel(filterIps(contentVar)))
         return RedirectView("/paste/${paste.uuid}")
     }
 
@@ -56,7 +57,7 @@ constructor(
         val paste = this.pasteRepository.findById(uuid).getOrNull() ?: throw ResourceNotFoundException()
         var content = form["content"] ?: return RedirectView("/paste")
         content = if (content.length > contentMaxLength) content.substring(0, contentMaxLength) else content
-        val new = this.pasteRepository.save(PasteModel(content))
+        val new = this.pasteRepository.save(PasteModel(filterIps(content)))
         return RedirectView("/paste/${new.uuid}")
     }
 
